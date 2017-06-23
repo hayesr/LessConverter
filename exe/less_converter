@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require "less_converter/cli"
+
+module LessConverter
+  class CLI < Thor
+    desc "convert [options] <source> <destination>"
+    def convert(options)
+      # convert --with-commit patternfly patternfly-sass
+      # Conversion.new(source, destination, options)
+    end
+  end
+end

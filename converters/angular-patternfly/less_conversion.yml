@@ -1,0 +1,25 @@
+# Convert Angular Patternfly to SCSS
+dependencies:
+  yarn_first: false
+  patternfly:
+    git: https://github.com/hayesr/patternfly-sass.git
+    # path: ~/local/path/to/folder
+    destination: node_modules/
+
+pipelines:
+  default:
+    - replace_vars
+    - replace_file_imports
+    - replace_mixin_definitions
+    - replace_mixins
+    - replace_spin
+    - replace_fade
+    - replace_image_urls
+    - remove_escaping
+    - convert_less_ampersand
+    - deinterpolate_vararg_mixins
+    - replace_calculation_semantics
+    - escape_variables_in_calc
+
+import_replacements:
+  "../node_modules/patternfly/dist/less/color-variables.less": /node_modules/patternfly-sass/assets/stylesheets/patternfly/_color-variables.scss

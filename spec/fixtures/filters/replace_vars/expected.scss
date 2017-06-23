@@ -1,0 +1,29 @@
+//
+// Variables
+// --------------------------------------------------
+// Bootstrap overrides and PatternFly-specific variables
+
+// PatternFly-specific
+// -------------------
+@import "foo.less";
+
+$applauncher-pf-dropdown-menu-border-width: 1px;
+$applauncher-pf-dropdown-menu-padding:      9px;
+$applauncher-pf-dropdown-menu-width:        220px;
+$applauncher-pf-dropdown-toggle-padding:    7px 10px;
+$applauncher-pf-icon-padding-right:         4px;
+$applauncher-pf-menu-link-border-color:     $color-pf-white;
+
+@mixin {}
+
+@media (max-width: 600px) {
+  .foo { color: red }
+}
+
+@page {}
+
+@supports {}
+
+@keyframes bar {}
+
+@font-face {}
