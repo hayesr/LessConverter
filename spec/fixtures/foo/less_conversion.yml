@@ -1,4 +1,16 @@
-# A pipeline is a set of sorted filters
+# Where less files are located
+# Can be removed from file keys
+#
+base_path: src
+
+dependencies:
+  yarn_first: false
+  patternfly:
+    git: https://github.com/hayesr/patternfly-sass.git
+    # path: ~/local/path/to/folder
+    destination: node_modules/
+
+# Required: A pipeline is a set of sorted filters
 # The default pipeline will be applied to all files
 #
 pipelines:
@@ -20,13 +32,11 @@ pipelines:
 
 file_overrides:
   # Override the pipeline
-  #
-  bar/zoo.less:
+  src/bar/zoo.less:
     pipeline: imports_only
 
   # Override the filters applied to a file (overrides filters from pipeline)
-  #
-  bar/baz.less:
+  src/bar/bar.less:
     filters:
       - remove_button_variant
       - replace_vars
@@ -42,6 +52,10 @@ file_overrides:
       - replace_calculation_semantics
       - escape_variables_in_calc
       - flatten_mixins
+
+    # Override the destination
+    destination: overriden/overriden_file.scss
+
 
 import_overrides:
   "../node_modules/patternfly/dist/less/color-variables.less": /node_modules/patternfly-sass/assets/stylesheets/patternfly/_color-variables.scss

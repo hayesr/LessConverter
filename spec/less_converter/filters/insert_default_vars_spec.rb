@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Filters::InsertDefaultVars do
+RSpec.describe LessConverter::Filters::InsertDefaultVars do
   let(:less) { "$less-var;" }
 
-  subject(:instance) { Filters::InsertDefaultVars.new(less) }
+  subject(:instance) { LessConverter::Filters::InsertDefaultVars.new(less) }
 
   it 'appends !default to the end of the line' do
     expect(subject.call).to eq "$less-var !default;"

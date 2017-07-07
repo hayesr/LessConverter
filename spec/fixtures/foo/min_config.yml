@@ -1,0 +1,14 @@
+pipelines:
+  default:
+    - replace_vars
+    - replace_file_imports
+    - replace_mixin_definitions
+    - replace_mixins
+    - replace_spin
+    - replace_fade
+    - replace_image_urls
+    - remove_escaping
+    - convert_less_ampersand
+    - deinterpolate_vararg_mixins
+    - replace_calculation_semantics
+    - escape_variables_in_calc

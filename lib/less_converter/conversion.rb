@@ -8,20 +8,61 @@ module LessConverter
     #
     # :args: source_url, destination, options
     #
-    def self.from_url(source_url, destination, options = {})
+    def self.from_url(source_url, destination)
       # download source to /tmp
       # source = "/tmp/tempsource"
-      new(source, destination, options)
+      new(source, destination)
     end
 
-    def initialize(source, destination, options = {})
-      # do stuff
+    attr_reader :source, :destination, :config
+    attr_writer :file_list
+
+    def initialize(source, destination, config_file: nil)
+      @source      = source
+      @destination = destination
+      @config      = load_config(source, destination, config_file)
     end
 
-    # create a new git commit or tag
-    def git_commit
-      # change to dir
-      # git commit -am "msg"
+    def dependencies
+      @config.dependencies
+    end
+
+    def files
+      @file_list ||= FileList.new(@config.source).files
+    end
+
+    def convertables
+      @convertables ||= files.map do |file|
+        Convertable.new(file, configuration: config)
+      end
+    end
+
+    def convert
+      convertables.each do |convertable|
+        prep_destination(convertable.destination.dirname)
+
+        File.open(convertable.destination, 'w') do |f|
+          f.write convertable.convert
+        end
+      end
+    end
+
+    # TODO: create a new git commit or tag
+    # def git_commit
+    #   # change to dir
+    #   # git commit -am "msg"
+    # end
+
+    private
+
+    def load_config(source, destination, config_file = nil)
+      yaml_path = config_file ? config_file : "#{source}/less_conversion.yml"
+
+      Configuration.new(source: @source, destination: @destination, yml_override: yaml_path)
+    end
+
+    def prep_destination(path)
+      path.mkpath unless path.exist?
     end
   end
 end

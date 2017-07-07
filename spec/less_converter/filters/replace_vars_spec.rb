@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Filters::ReplaceVars do
-  subject(:instance) { Filters::ReplaceVars }
+RSpec.describe LessConverter::Filters::ReplaceVars do
+  subject(:instance) { LessConverter::Filters::ReplaceVars }
 
   it 'replaces variables' do
     expect(subject.new("@less-var").call).to eq "$less-var"
