@@ -13,7 +13,7 @@ RSpec.describe LessConverter::Filters::ReplaceFileImports do
   describe 'overriding import statements' do
     let(:config) do
       {
-        'import_replacements' => {
+        'import_overrides' => {
           'override-me.less' => 'path/to/override_file.scss'
         }
       }
@@ -27,7 +27,7 @@ RSpec.describe LessConverter::Filters::ReplaceFileImports do
       File.read(fixtures_path.join('filters', 'replace_file_imports', 'expected.scss'))
     end
 
-    subject { LessConverter::Filters::ReplaceFileImports.new(less, config: config).call }
+    subject { LessConverter::Filters::ReplaceFileImports.new(less, configuration: config).call }
 
     it { is_expected.to eq converted }
   end

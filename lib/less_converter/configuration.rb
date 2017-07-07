@@ -32,6 +32,10 @@ module LessConverter
       @data.fetch('file_overrides', {})
     end
 
+    def [](key)
+      @data[key]
+    end
+
     private
 
     def determine_yml_path(yml_override = nil)

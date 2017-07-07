@@ -3,12 +3,13 @@
 #
 base_path: src
 
+yarn_first: false
+
 dependencies:
-  yarn_first: false
   patternfly:
     git: https://github.com/hayesr/patternfly-sass.git
     # path: ~/local/path/to/folder
-    destination: node_modules/
+    destination: vendor/
 
 # Required: A pipeline is a set of sorted filters
 # The default pipeline will be applied to all files

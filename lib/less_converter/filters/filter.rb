@@ -3,9 +3,9 @@ module LessConverter
     class Filter
       attr_accessor :data, :config
 
-      def initialize(data, config: {})
+      def initialize(data, configuration: {})
         @data   = data.dup
-        @config = config
+        @config = configuration
       end
 
       # Default filter does nothing

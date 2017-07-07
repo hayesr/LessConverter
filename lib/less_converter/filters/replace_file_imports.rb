@@ -37,7 +37,7 @@ module LessConverter
       end
 
       def overrides
-        config['import_replacements'] || {}
+        config['import_overrides'] || {}
       end
 
       def normalize_import(str)

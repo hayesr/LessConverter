@@ -1,10 +1,13 @@
 # Convert Angular Patternfly to SCSS
 dependencies:
-  yarn_first: false
-  patternfly:
+  patternfly-sass:
     git: https://github.com/hayesr/patternfly-sass.git
+
+    # specify a local folder, contents will be moved under destination (next value)
     # path: ~/local/path/to/folder
-    destination: node_modules/
+
+    # destination for dependency is relative to conversion destination
+    destination: vendor/patternfly-sass
 
 pipelines:
   default:
@@ -21,5 +24,6 @@ pipelines:
     # - replace_calculation_semantics
     # - escape_variables_in_calc
 
-import_replacements:
-  "../node_modules/patternfly/dist/less/color-variables.less": /node_modules/patternfly-sass/assets/stylesheets/patternfly/_color-variables.scss
+import_overrides:
+  # When we come across a given import path, replace it with a relative path from the destination directory
+  "../node_modules/patternfly/dist/less/color-variables.less": ../vendor/patternfly-sass/assets/stylesheets/patternfly/_color-variables.scss

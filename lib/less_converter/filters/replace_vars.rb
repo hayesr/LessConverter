@@ -12,12 +12,13 @@ module LessConverter
 
       def skip_words
         %w(
-          mixin
+          font-face
+          import
+          keyframes
           media
+          mixin
           page
           supports
-          keyframes
-          font-face
         ).map { |e| "@#{e}" }.join('|')
       end
     end

@@ -22,7 +22,7 @@ module LessConverter
     #
     def convert
       filter_classes.inject(data) do |subject, filter|
-        filter.new(subject).call
+        filter.new(subject, configuration: @config).call
       end
     end
 

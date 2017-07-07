@@ -17,6 +17,7 @@ RSpec.describe LessConverter::Conversion do
   describe 'setup' do
     it 'finds dependencies' do
       expect(subject.dependencies).not_to be_empty
+      expect(subject.dependencies.first).to be_an_instance_of LessConverter::Dependency
     end
   end
 

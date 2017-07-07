@@ -24,7 +24,14 @@ module LessConverter
     end
 
     def dependencies
-      @config.dependencies
+      @dependencies ||= @config.dependencies.map do |name, options|
+        Dependency.new(
+          name: name,
+          path: options['path'],
+          git: options['git'],
+          destination: @config.destination.join(options['destination'])
+        )
+      end
     end
 
     def files
@@ -45,6 +52,10 @@ module LessConverter
           f.write convertable.convert
         end
       end
+    end
+
+    def fetch_dependencies
+      dependencies.each(&:fetch)
     end
 
     # TODO: create a new git commit or tag

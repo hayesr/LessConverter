@@ -9,6 +9,8 @@ RSpec.describe "Angular-patternfly conversion" do
   # find files in directories
   # find imports
 
+  let(:aps_fixture_path) { fixtures_path.join('angular-patternfly-sass') }
+
   let(:source)      { Pathname.new('../angular-patternfly').expand_path(project_path) }
   let(:destination) { Pathname.new('tmp/angular-patternfly-sass').expand_path(project_path) }
 
@@ -52,10 +54,42 @@ RSpec.describe "Angular-patternfly conversion" do
   end
 
   describe 'writing files' do
-    it 'writes a scss file for every less file' do
+    before do
+      destination.rmtree
       subject.convert
+    end
+
+    it 'writes a scss file for every less file' do
       expect(subject.config.source).to eq source
       expect( Dir["#{destination}/**/*.scss"].count ).to eq subject.files.count
+    end
+
+    it 'should copy other files too' do
+      expect( destination.join('src').find.count ).to eq source.join('src').find.count
+    end
+  end
+
+  describe 'dealing with dependencies' do
+    # The patternfly-sass project should be a dependency
+    it 'finds the patternfly-sass dependency' do
+      expect(subject.config.dependencies).to include('patternfly-sass')
+    end
+
+    # The color-variables file should be overriden with the sass version
+    it 'overrides the color-variables import path' do
+      expect(subject.config.import_overrides).to include('../node_modules/patternfly/dist/less/color-variables.less')
+
+      entry = subject.convertables.detect { |c| c.path.to_s =~ /angular-patternfly\.less/ }
+
+      expect(entry.pipeline).to include('replace_file_imports')
+
+      # At time of writing, angular-patternfly.less ended in 2 empty lines
+      expect(entry.convert.chomp).to eq aps_fixture_path.join('styles', 'angular-patternfly.scss').read
+    end
+
+    it 'downloads the dependency from git' do
+      subject.fetch_dependencies
+      expect(destination.join('vendor', 'patternfly-sass')).to exist
     end
   end
 end

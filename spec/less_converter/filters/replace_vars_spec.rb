@@ -22,4 +22,8 @@ RSpec.describe LessConverter::Filters::ReplaceVars do
   it 'does not modify @supports' do
     expect(subject.new("@supports").call).to eq "@supports"
   end
+
+  it 'does not modify @media' do
+    expect(subject.new("@media").call).to eq "@media"
+  end
 end
